@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gammagoblin Art Collector Dashboard</title>
+    <!-- Load Inter Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use the 'Inter' font and a dark/vibrant theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gg-dark': '#111827', // Dark gray background
+                        'gg-accent-orange': '#F97316', // Orange Sunshine
+                        'gg-accent-purple': '#8B5CF6', // Neon Purple
+                        'gg-highlight-blue': '#3B82F6', // Blue for buttons
+                        'gg-card': '#1F2937', // Slightly lighter dark gray for cards
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], 
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for grid pattern effect */
+        .blotter-pattern {
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 11px
+            );
+        }
+        .card-glow {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); /* Purple glow effect */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-glow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gg-dark text-gray-100 min-h-screen blotter-pattern">
+
+    <div id="app" class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header and Navigation -->
+        <header class="mb-8 border-b border-gg-card pb-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <h1 class="text-3xl font-bold text-gg-accent-orange tracking-wider">
+                    <span class="text-gg-accent-purple">GG</span> COLLECTOR HUB
+                </h1>
+                <!-- Navigation links use font-medium as a base style -->
+                <nav class="mt-4 sm:mt-0 space-x-4 text-sm font-medium" id="main-nav">
+                    <a href="#" data-page="home" class="nav-link text-gray-400 font-medium hover:text-gg-accent-orange transition duration-200">Shop Home</a>
+                    <a href="#" data-page="collection" class="nav-link text-gray-400 font-medium hover:text-gg-accent-orange transition duration-200">Products</a>
+                    <a href="#" data-page="contact" class="nav-link text-gray-400 font-medium hover:text-gg-accent-orange transition duration-200">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Social Media/Community Banner (Clickable Link) -->
+        <section class="mb-10 p-4 bg-gg-accent-purple rounded-xl shadow-2xl shadow-purple-900/50 text-center cursor-pointer">
+            <a href="https://www.instagram.com/gammagoblin_psychedelics?igsh=MTB2NmV3bjJ3NGNtcQ==" target="_blank" class="block text-lg font-semibold text-white hover:text-gray-200 transition duration-200">
+                ✨ Join the Community! Follow our latest drops on <span class="underline font-extrabold">@gammagoblin_psychedelics</span> ✨
+            </a>
+        </section>
+
+        <!-- Dynamic Content Area -->
+        <main>
+            <!-- 1. HOME VIEW -->
+            <div id="home-view" class="p-6 bg-gg-card rounded-xl shadow-2xl shadow-gg-accent-orange/20">
+                <h2 class="text-4xl font-extrabold text-gg-accent-orange mb-4">
+                    The Art of Perception
+                </h2>
+                <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                    Welcome to the nexus of pattern, color, and design. Our collectible blotter art pieces are more than just paper; they are tangible representations of digital aesthetics, translating complex geometries and vibrant palettes into unique, limited-edition artifacts. Explore the gallery, dive into the philosophy behind the perforation, and secure your next masterpiece.
+                </p>
+                <!-- CTA button uses ID for JS event listener -->
+                <button id="view-collection-button" class="bg-gg-accent-orange hover:bg-orange-600 text-gg-dark font-extrabold py-3 px-8 rounded-lg transition duration-300 shadow-xl shadow-gg-accent-orange/50 text-base">
+                    View the Collection Now →
+                </button>
+            </div>
+
+            <!-- 2. COLLECTION VIEW -->
+            <div id="collection-view" class="hidden">
+                <h2 class="text-2xl font-bold mb-6 text-white border-l-4 border-gg-accent-orange pl-3">
+                    Featured Collection: Collector's Cut
+                </h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- Card 1: Orange Sunshine -->
+                    <div class="bg-gg-card p-4 rounded-xl card-glow border-2 border-gg-accent-orange">
+                        <div class="h-48 bg-yellow-500 rounded-lg flex items-center justify-center mb-4">
+                            <span class="text-3xl font-black text-gray-900">☀️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-1 truncate">Orange Sunshine</h3>
+                        <p class="text-gray-400 text-sm mb-3">Classic Design, Limited Print</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gg-accent-orange">$50.00</span>
+                            <!-- Button triggers detail view for product 'os001' -->
+                            <button data-product-id="os001" class="view-detail-button bg-gg-highlight-blue hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Rick & Morty Mini - Morty -->
+                    <div class="bg-gg-card p-4 rounded-xl card-glow border-2 border-gg-accent-purple">
+                        <div class="h-48 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                            <span class="text-3xl font-black text-gray-900">🧠</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-1 truncate">Rick & Morty Mini - Morty</h3>
+                        <p class="text-gray-400 text-sm mb-3">Exclusive Mini-Series</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gg-accent-purple">$30.00</span>
+                            <!-- Button triggers detail view for product 'rm002' -->
+                            <button data-product-id="rm002" class="view-detail-button bg-gg-highlight-blue hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: CHEMIST Double-Sided -->
+                    <div class="bg-gg-card p-4 rounded-xl card-glow border-2 border-gray-500">
+                        <div class="h-48 bg-red-500 rounded-lg flex items-center justify-center mb-4">
+                            <span class="text-3xl font-black text-white">⚗️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-1 truncate">CHEMIST Double-Sided</h3>
+                        <p class="text-gray-400 text-sm mb-3">Two-Part Variant Artwork</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-white">$50.00</span>
+                            <!-- Button triggers detail view for product 'ch003' -->
+                            <button data-product-id="ch003" class="view-detail-button bg-gg-highlight-blue hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Dripping Felix -->
+                    <div class="bg-gg-card p-4 rounded-xl card-glow border-2 border-pink-500">
+                        <div class="h-48 bg-pink-500 rounded-lg flex items-center justify-center mb-4">
+                            <span class="text-3xl font-black text-white">🐈</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-1 truncate">Dripping Felix</h3>
+                        <p class="text-gray-400 text-sm mb-3">Signature Dripping Style</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-pink-500">$50.00</span>
+                            <!-- Button triggers detail view for product 'df004' -->
+                            <button data-product-id="df004" class="view-detail-button bg-gg-highlight-blue hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 3. PRODUCT DETAIL VIEW -->
+            <div id="product-detail-view" class="hidden">
+                <button onclick="navigate('collection')" class="text-sm text-gray-400 hover:text-gg-accent-orange mb-4 inline-flex items-center transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                    Back to Collection
+                </button>
+                <div id="product-detail-content" class="bg-gg-card p-6 rounded-xl shadow-2xl">
+                    <!-- Dynamic product details are injected here by JavaScript -->
+                    <p class="text-center text-gray-500">Loading product details...</p>
+                </div>
+            </div>
+
+            <!-- 4. CHECKOUT VIEW (NEW) -->
+            <div id="checkout-view" class="hidden">
+                <button onclick="navigate('collection')" class="text-sm text-gray-400 hover:text-gg-accent-orange mb-4 inline-flex items-center transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                    Back to Collection
+                </button>
+
+                <h2 class="text-3xl font-bold mb-6 text-gg-accent-purple border-l-4 border-gg-accent-purple pl-3">
+                    Secure Checkout
+                </h2>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left Side: Payment and Shipping Form -->
+                    <div class="lg:w-2/3 bg-gg-card p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-white">1. Shipping & Payment Details</h3>
+                        <form id="checkout-form">
+                            <!-- Shipping Fields -->
+                            <div class="space-y-4 mb-8">
+                                <input type="text" placeholder="Full Name" required class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                <input type="email" placeholder="Email Address" required class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                <input type="text" placeholder="Shipping Address" required class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="City" required class="p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                    <input type="text" placeholder="Zip/Postal Code" required class="p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                </div>
+                            </div>
+                            
+                            <!-- Payment Fields -->
+                            <h3 class="text-xl font-semibold mb-4 text-white border-t border-gray-600 pt-4">2. Payment Information</h3>
+                            <div class="space-y-4">
+                                <input type="text" placeholder="Card Number (XXXX XXXX XXXX XXXX)" required class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                <div class="grid grid-cols-3 gap-4">
+                                    <input type="text" placeholder="MM/YY" required class="p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                    <input type="text" placeholder="CVC" required class="p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                    <input type="text" placeholder="Card Holder Name" required class="p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-gg-highlight-blue focus:ring focus:ring-gg-highlight-blue/50 transition">
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button Handled by JS below -->
+                        </form>
+                    </div>
+                    
+                    <!-- Right Side: Order Summary -->
+                    <div class="lg:w-1/3">
+                        <div class="bg-gg-card p-6 rounded-xl shadow-lg border border-gg-accent-orange/50">
+                            <h3 class="text-xl font-semibold mb-4 text-gg-accent-orange">Order Summary</h3>
+                            <div id="order-summary-content">
+                                <!-- Dynamic content injected here -->
+                                <p class="text-gray-500">Select an item to view summary.</p>
+                            </div>
+                            <button id="place-order-button" class="mt-6 w-full bg-gg-accent-orange hover:bg-orange-600 text-gg-dark font-extrabold py-3 rounded-lg transition duration-300 shadow-xl shadow-gg-accent-orange/50 text-base" disabled>
+                                Place Order (N/A)
+                            </button>
+                            <p class="text-xs text-center text-gray-500 mt-2">
+                                By clicking "Place Order," you agree to purchase this digital collectible.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. CONTACT VIEW (Placeholder) -->
+            <div id="contact-view" class="hidden p-6 bg-gg-card rounded-xl shadow-2xl shadow-gg-accent-purple/20 text-center">
+                <h2 class="text-4xl font-extrabold text-gg-accent-purple mb-4">
+                    Get in Touch
+                </h2>
+                <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                    For inquiries about custom designs, large-scale prints, or partnerships, please reach out to our team. We're always excited to collaborate on new visual projects.
+                </p>
+                <div class="inline-block text-lg border-2 border-dashed border-gray-500 p-3 rounded-lg text-gray-400">
+                    <span class="font-mono">contact@gghub.art</span>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t border-gg-card text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Collector Hub. Inspired by unique blotter art aesthetics.</p>
+        </footer>
+    </div>
+
+    <!-- Simple Client-Side Routing Logic and Data -->
+    <script>
+        // Product Data Storage
+        const products = {
+            'os001': {
+                id: 'os001',
+                title: 'Orange Sunshine',
+                price: '50.00',
+                series: 'Classic Design, Limited Print',
+                description: 'A tribute to the iconic 60s era, this piece utilizes sunburst patterns and high-energy color transitions to evoke feelings of warmth and limitless creativity. Printed on heavy archival paper with custom perforation.',
+                emoji: '☀️',
+                borderColor: 'border-gg-accent-orange',
+                bgColor: 'bg-yellow-500'
+            },
+            'rm002': {
+                id: 'rm002',
+                title: 'Rick & Morty Mini - Morty',
+                price: '30.00',
+                series: 'Exclusive Mini-Series: The Citadel Collection',
+                description: 'A pocket-sized masterpiece capturing the anxious energy of Morty. This collectible is part of a highly limited mini-run, perfect for display in smaller frames or shadow boxes. Wubba lubba dub dub!',
+                emoji: '🧠',
+                borderColor: 'border-gg-accent-purple',
+                bgColor: 'bg-green-500'
+            },
+            'ch003': {
+                id: 'ch003',
+                title: 'CHEMIST Double-Sided',
+                price: '50.00',
+                series: 'Lab Series: Two-Part Variant Artwork',
+                description: 'This is a rare double-sided blotter, featuring a complex molecular diagram on one side and a corresponding geometric pattern on the reverse. A true collector\'s item exploring the intersection of science and art.',
+                emoji: '⚗️',
+                borderColor: 'border-gray-500',
+                bgColor: 'bg-red-500'
+            },
+            'df004': {
+                id: 'df004',
+                title: 'Dripping Felix',
+                price: '50.00',
+                series: 'Signature Dripping Style, Pop Art Edition',
+                description: 'A vibrant, dripping interpretation of the classic cartoon icon, rendered in neon pinks and blacks. This piece embodies the fluid, constantly shifting nature of visual art and perception.',
+                emoji: '🐈',
+                borderColor: 'border-pink-500',
+                bgColor: 'bg-pink-500'
+            }
+        };
+
+        // Function to toggle views
+        function navigate(pageName) {
+            const views = {
+                'home': document.getElementById('home-view'),
+                'collection': document.getElementById('collection-view'),
+                'contact': document.getElementById('contact-view'),
+                'product-detail': document.getElementById('product-detail-view'),
+                'checkout': document.getElementById('checkout-view') // Added new view
+            };
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Hide all views
+            Object.values(views).forEach(view => {
+                if (view) view.classList.add('hidden');
+            });
+
+            // Show the requested view
+            if (views[pageName]) {
+                views[pageName].classList.remove('hidden');
+            }
+
+            // Update active navigation link styling
+            navLinks.forEach(link => {
+                const navPage = link.getAttribute('data-page');
+                // Keep 'Products' active when on collection, detail, or checkout pages
+                const isActive = navPage === pageName || 
+                                 (navPage === 'collection' && (pageName === 'product-detail' || pageName === 'checkout')); 
+                
+                if (isActive) {
+                    link.classList.remove('text-gray-400', 'font-medium');
+                    link.classList.add('text-white', 'font-bold');
+                } else {
+                    link.classList.remove('text-white', 'font-bold');
+                    link.classList.add('text-gray-400', 'font-medium');
+                }
+            });
+        }
+
+        // Function to handle showing the product detail page
+        function showProductDetail(productId) {
+            const product = products[productId];
+            if (!product) {
+                console.error('Product not found:', productId);
+                navigate('collection'); // Fallback to collection view
+                return;
+            }
+
+            const detailContent = document.getElementById('product-detail-content');
+            
+            // Dynamic HTML for the single product view
+            detailContent.innerHTML = `
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left Side: Artwork Image/Emoji -->
+                    <div class="lg:w-1/2 p-6 rounded-xl shadow-inner ${product.bgColor} ${product.borderColor} border-4">
+                        <div class="h-full min-h-[300px] flex items-center justify-center">
+                            <span class="text-9xl font-black text-gray-900 drop-shadow-lg">${product.emoji}</span>
+                        </div>
+                    </div>
+<!-- Right Side: Details -->
+                    <div class="lg:w-1/2">
+                        <span class="text-sm font-semibold text-gg-accent-purple tracking-widest uppercase">${product.id}</span>
+                        <h1 class="text-4xl font-extrabold text-white mt-1 mb-4">${product.title}</h1>
+                        <p class="text-3xl font-bold text-gg-accent-orange mb-6">$${product.price}</p>
+                        
+                        <h3 class="text-lg font-semibold text-gray-300 mb-2">Series:</h3>
+                        <p class="text-gray-400 mb-6">${product.series}</p>
+
+                        <h3 class="text-lg font-semibold text-gray-300 mb-2">Description:</h3>
+                        <p class="text-gray-300 leading-relaxed mb-8">${product.description}</p>
+
+                        <!-- CTA to Checkout -->
+                        <button id="checkout-cta" data-product-id="${product.id}" class="w-full bg-gg-accent-purple hover:bg-purple-700 text-white font-extrabold py-3 px-8 rounded-lg transition duration-300 shadow-xl shadow-purple-900/50 text-lg">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            navigate('product-detail');
+
+            // Attach event listener to the new CTA button
+            document.getElementById('checkout-cta').addEventListener('click', (e) => {
+                showCheckoutPage(e.currentTarget.getAttribute('data-product-id'));
+            });
+        }
+        
+        // Function to show the checkout page with specific product data
+        function showCheckoutPage(productId) {
+            const product = products[productId];
+            if (!product) {
+                console.error('Checkout item not found:', productId);
+                navigate('collection');
+                return;
+            }
+
+            // Calculate totals (simulated)
+            const subtotal = parseFloat(product.price);
+            const shipping = 7.50;
+            const taxRate = 0.085; // 8.5%
+            const tax = subtotal * taxRate;
+            const total = subtotal + shipping + tax;
+            
+            const summaryContent = document.getElementById('order-summary-content');
+
+            summaryContent.innerHTML = `
+                <!-- Item Summary -->
+                <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-700">
+                    <div class="w-16 h-16 ${product.bgColor} rounded-lg flex items-center justify-center border ${product.borderColor}">
+                        <span class="text-2xl">${product.emoji}</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-white">${product.title}</p>
+                        <p class="text-sm text-gray-400">${product.series}</p>
+                    </div>
+                </div>
+
+                <!-- Price Breakdown -->
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Subtotal</span>
+                        <span class="text-white">$${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Shipping</span>
+                        <span class="text-white">$${shipping.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Taxes (8.5%)</span>
+                        <span class="text-white">$${tax.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <!-- Grand Total -->
+                <div class="flex justify-between mt-4 pt-4 border-t border-gray-700">
+                    <span class="text-lg font-bold text-gg-accent-orange">Order Total</span>
+                    <span class="text-lg font-bold text-gg-accent-orange">$${total.toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Enable the place order button for visual purposes
+            document.getElementById('place-order-button').removeAttribute('disabled');
+            document.getElementById('place-order-button').textContent = `Place Order ($${total.toFixed(2)})`;
+
+            navigate('checkout');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Event listener for navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = e.target.getAttribute('data-page');
+                    if (page) {
+                        navigate(page);
+                    }
+                });
+            });
+
+            // Event listener for the main CTA button on Home page
+            const viewCollectionButton = document.getElementById('view-collection-button');
+            if (viewCollectionButton) {
+                viewCollectionButton.addEventListener('click', () => {
+                    navigate('collection');
+                });
+            }
+
+            // Listeners for "View Detail" buttons on collection cards
+            document.querySelectorAll('.view-detail-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.currentTarget.getAttribute('data-product-id');
+                    showProductDetail(productId);
+                });
+            });
+            
+            // Placeholder listener for the final order button
+            const placeOrderButton = document.getElementById('place-order-button');
+            if (placeOrderButton) {
+                placeOrderButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // In a real app, this would submit the form data
+                    alert('Order placed! (Simulated)');
+                    navigate('home');
+                });
+            }
+
+            // Start on the home page
+            navigate('home');
+        });
+    </script>
+</body>
+</html>
+  
